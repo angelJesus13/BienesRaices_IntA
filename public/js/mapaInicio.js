@@ -1,49 +1,84 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+(function () {
+  const lat = 20.2741536;  // Coordenadas de tu casa
+  const lng = -97.9598598; // Coordenadas de tu casa
+  const mapa = L.map('mapa-inicio').setView([lat, lng], 13);
 
-/***/ "./src/js/mapaInicio.js":
-/*!******************************!*\
-  !*** ./src/js/mapaInicio.js ***!
-  \******************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+  let markers = new L.FeatureGroup().addTo(mapa)
+  let propiedades = [];
 
-eval("__webpack_require__.r(__webpack_exports__);\n\r\n(function () {\r\n    const lat = 20.67444163271174;\r\n    const lng = -103.38739216304566;\r\n    const mapa = L.map('mapa-inicio').setView([lat, lng], 13);\r\n\r\n    let markers = new L.FeatureGroup().addTo(mapa)\r\n    let propiedades = [];\r\n    //Filtros\r\n\r\n    const filtros = {\r\n        categoria: '',\r\n        precio: ''\r\n    }\r\n\r\n    const categoriasSelect = document.querySelector('#categorias');\r\n    const preciosSelect = document.querySelector('#precios');\r\n\r\n\r\n    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\r\n        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\r\n    }).addTo(mapa)\r\n\r\n    //Filtrado de categorias y precios\r\n\r\n    categoriasSelect.addEventListener('change', e => {\r\n        filtros.categoria = +e.target.value\r\n        filtrarPropiedades();\r\n    })\r\n\r\n    preciosSelect.addEventListener('change', e => {\r\n        filtros.precio = +e.target.value\r\n        filtrarPropiedades();\r\n    })\r\n\r\n\r\n    const obtenerPropiedades = async () => {\r\n        try {\r\n            const url = '/api/propiedades'\r\n            const respuesta = await fetch(url)\r\n            propiedades = await respuesta.json()\r\n\r\n            mostrarPropiedades(propiedades)\r\n\r\n        } catch (error) {\r\n            console.log(error)\r\n        }\r\n    }\r\n\r\n    const mostrarPropiedades = propiedades => {\r\n\r\n        //Limpiar markers previos\r\n\r\n        markers.clearLayers()\r\n\r\n        propiedades.forEach(propiedad => {\r\n            //Agregar los pines\r\n\r\n            const marker = new L.marker([propiedad?.lat, propiedad?.lng], {\r\n                autoPan: true\r\n            })\r\n                .addTo(mapa)\r\n                .bindPopup(`\r\n            <p class=\"text-indigo-600 font-bold\">${propiedad.categoria.nombre}</p>\r\n            <h1 class=\"text-xl font-extrabold uppercase my-5\"> ${propiedad.titulo} </h1>\r\n            <img src=\"/uploads/${propiedad?.imagen}\" alt=\"Imagen de la propiedad ${propiedad.titulo}\">\r\n            <p class=\"text-gray-600 font-bold\">${propiedad.precio.nombre}</p>\r\n            <a href=\"/propiedad/${propiedad.id}\" class=\"bg-indigo-600 block p-2 text-center font-bold uppercase\">Ver Propiedad</a>\r\n            `)\r\n\r\n            markers.addLayer(marker)\r\n        })\r\n    }\r\n\r\n    const filtrarPropiedades = () => {\r\n        const resultado = propiedades.filter(filtrarCategoria).filter(filtrarPrecio)\r\n        mostrarPropiedades(resultado)\r\n    }\r\n\r\n    const filtrarCategoria = (propiedad) => {\r\n        return filtros.categoria ? propiedad.categoriaID === filtros.categoria : propiedad\r\n    }\r\n\r\n    const filtrarPrecio = (propiedad) => {\r\n        return filtros.precio ? propiedad.precioID === filtros.precio : propiedad\r\n    }\r\n    obtenerPropiedades()\r\n\r\n})()\n\n//# sourceURL=webpack://bienesraices220262/./src/js/mapaInicio.js?");
+  // Filtros
+  const filtros = {
+      categoria: '',
+      precio: ''
+  }
 
-/***/ })
+  const categoriasSelect = document.querySelector('#categorias');
+  const preciosSelect = document.querySelector('#precios');
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports si
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/js/mapaInicio.js"](0, __webpack_exports__, __webpack_require__);
-/******/ 	
-/******/ })()
-;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(mapa)
+
+  // Filtrado de categorías y precios
+  categoriasSelect.addEventListener('change', e => {
+      filtros.categoria = +e.target.value
+      filtrarPropiedades();
+  })
+
+  preciosSelect.addEventListener('change', e => {
+      filtros.precio = +e.target.value
+      filtrarPropiedades();
+  })
+
+  const obtenerPropiedades = async () => {
+      try {
+          const url = '/api/propiedades'
+          const respuesta = await fetch(url)
+          propiedades = await respuesta.json()
+
+          mostrarPropiedades(propiedades)
+
+      } catch (error) {
+          console.log(error)
+      }
+  }
+
+  const mostrarPropiedades = propiedades => {
+
+      // Limpiar markers previos
+      markers.clearLayers()
+
+      propiedades.forEach(propiedad => {
+          // Agregar los pines
+          const marker = new L.marker([propiedad?.lat, propiedad?.lng], {
+              autoPan: true
+          })
+              .addTo(mapa)
+              .bindPopup(`
+          <p class="text-indigo-600 font-bold">${propiedad.categoria.nombre}</p>
+          <h1 class="text-xl font-extrabold uppercase my-5"> ${propiedad.titulo} </h1>
+          <img src="/uploads/${propiedad?.imagen}" alt="Imagen de la propiedad ${propiedad.titulo}">
+          <p class="text-gray-600 font-bold">${propiedad.precio.nombre}</p>
+          <a href="/propiedad/${propiedad.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase">Ver Propiedad</a>
+          `)
+
+          markers.addLayer(marker)
+      })
+  }
+
+  const filtrarPropiedades = () => {
+      const resultado = propiedades.filter(filtrarCategoria).filter(filtrarPrecio)
+      mostrarPropiedades(resultado)
+  }
+
+  const filtrarCategoria = (propiedad) => {
+      return filtros.categoria ? propiedad.categoriaID === filtros.categoria : propiedad
+  }
+
+  const filtrarPrecio = (propiedad) => {
+      return filtros.precio ? propiedad.precioID === filtros.precio : propiedad
+  }
+
+  obtenerPropiedades()
+
+})()
