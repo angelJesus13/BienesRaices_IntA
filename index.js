@@ -12,7 +12,7 @@ const app = express()
 
 //habilitar lectura de datos de formularios
 
-app.use(express.urlencoded({ extend: true }))
+app.use(express.urlencoded({ extended: true }));
 
 //Habilitar cookie Parser
 app.use(cookieParser())
@@ -23,11 +23,12 @@ app.use(csurf({ cookie: true }))
 //conexion a la bd
 try {
     await db.authenticate();
-    db.sync()
-    console.log('Conexion a la bd exitosa!!!')
+    await db.sync({ alter: true }); // Actualiza la tabla con los cambios del modelo
+    console.log('Conexión a la base de datos exitosa y sincronización completada.');
 } catch (error) {
-    console.log(error)
+    console.error('Error al conectar a la base de datos:', error);
 }
+
 
 
 //habilitar pug

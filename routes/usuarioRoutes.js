@@ -2,26 +2,27 @@ import express from "express";
 import { formularioLogin, formularioRegistro, registrar, confirmar, formularioOlvidePassword, resetPassword, comprobarToken, nuevoPassword, autenticar, cerrarSesion } from "../controllers/usuarioController.js";
 
 const router = express.Router();
-//Routing
+
+// Página de inicio de sesión
 router.get('/login', formularioLogin);
 router.post('/login', autenticar);
 
-//cerrar sesión 
+// Cerrar sesión
+router.post('/cerrar-sesion', cerrarSesion);
 
-router.post('/cerrar-sesion', cerrarSesion)
-
+// Registro de usuarios
 router.get('/registro', formularioRegistro);
 router.post('/registro', registrar);
 
-router.get('/confirmar/:token', confirmar)
+// Confirmar cuenta de usuario
+router.get('/confirmar/:token', confirmar);
 
+// Recuperación de contraseña
 router.get('/olvide-password', formularioOlvidePassword);
 router.post('/olvide-password', resetPassword);
 
-//Almacena el nuevo password
+// Restablecer contraseña con token
 router.get('/olvide-password/:token', comprobarToken);
 router.post('/olvide-password/:token', nuevoPassword);
 
-
-
-export default router
+export default router;
