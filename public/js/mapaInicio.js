@@ -40,7 +40,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n\r\n(function () {\r\n    con
 /************************************************************************/
 /******/ 	
 /******/ 	// startup
-/******/ 	// Load entry module and return exports
+/******/ 	// Load entry module and return exports si
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = {};
 /******/ 	__webpack_modules__["./src/js/mapaInicio.js"](0, __webpack_exports__, __webpack_require__);
