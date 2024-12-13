@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt'
-const usuarios = [
-    {
+const usuarios = [ {
         nombre: 'Esperanza',
-        email: '',
+        email: 'esperanza@gmail.com',
+        birthdate: '2024-11-08',
         confirmado: 1,
-        password: bcrypt.hashSync('password', 10)
+        password: bcrypt.hashSync('password', 10),
+        image: '.jpg'
     }
 ]
 
