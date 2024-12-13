@@ -1,62 +1,68 @@
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 const emailRegistro = async (datos) => {
-  const transport = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
+	const transport = nodemailer.createTransport({
+		host: process.env.EMAIL_HOST,
+		port: process.env.EMAIL_PORT,
+		auth: {
+			user: process.env.EMAIL_USER,
+			pass: process.env.EMAIL_PASS
+		}
+	});
 
-  const { email, nombre, token } = datos
+	const { email, nombre, token } = datos;
 
-  //Enviar el email
-  await transport.sendMail({
-    from: 'BienesRaices.com',
-    to: email,
-    subject: 'Confirma tu cuenta en BienesRaices.com',
-    text: 'Confirma tu cuenta en BienesRaices.com',
-    html: `
-        <p>Hola ${nombre}, comprueba tu cuenta en BienesRaices.com</p>
-
-        <p>Tu cuenta ya esta lista, solo debes confirmarla en el siguiente enlace: 
-        <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3009}/auth/confirmar/${token}" >Confirmar cuenta</a> </p>
-
-        <p>Si tu no creaste esta cuenta, puedes ignorar este email</p>
-    `
-  })
-}
+	// Enviar el email
+	await transport.sendMail({
+        from: 'BienesRaices.com',
+        to: email,
+        subject: '¡Verifica tu cuenta en BienesRaices.com!',
+        html: `
+            <div style="font-family: Arial, sans-serif; color: #333;">
+                <p style="font-size: 16px; line-height: 1.6;">Hola ${nombre},</p>
+                <p style="font-size: 16px; line-height: 1.6;">Para completar tu registro, confirma tu correo electrónico haciendo clic en el siguiente enlace:</p>
+                <p><a href="${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/auth/confirm/${token}" style="color: #0066cc; text-decoration: none;">Confirmar mi cuenta</a></p>
+                <p style="font-size: 16px; line-height: 1.6;">¡Gracias por ser parte de BienesRaices.com!</p>
+                <br>
+                <p style="font-size: 14px; color: #666;">Saludos,</p>
+                <p style="font-size: 14px; color: #666;">Angel de Jesus Baños</p>
+            </div>
+        `
+    });
+};
 
 const emailOlvidePassword = async (datos) => {
-  const transport = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
+	const transport = nodemailer.createTransport({
+		host: process.env.EMAIL_HOST,
+		port: process.env.EMAIL_PORT,
+		auth: {
+			user: process.env.EMAIL_USER,
+			pass: process.env.EMAIL_PASS
+		}
+	});
 
-  const { email, nombre, token } = datos
+	const { email, nombre, token } = datos;
 
-  //Enviar el email
-  await transport.sendMail({
-    from: 'BienesRaices.com',
-    to: email,
-    subject: 'Restablece tu password en BienesRaices.com',
-    text: 'Restablece tu password en BienesRaices.com',
-    html: `
-      <p>Hola ${nombre}, has solicitado restablecer tu password en BienesRaices.com</p>
+	// Enviar el email
+	await transport.sendMail({
+        from: 'BienesRaices.com',
+        to: email,
+        subject: 'Solicitud de cambio de contraseña en BienesRaices.com!',
+        html: `
+            <div style="font-family: Arial, sans-serif; color: #333;">
+                <p style="font-size: 16px; line-height: 1.6;">Hola ${nombre},</p>
+                <p style="font-size: 16px; line-height: 1.6;">Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace para crear una nueva contraseña:</p>
+                <p><a href="${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/auth/reset-password/${token}" style="color: #0066cc; text-decoration: none;">Restablecer mi contraseña</a></p>
+                <p style="font-size: 16px; line-height: 1.6;">¡Gracias por ser parte de BienesRaices.com!</p>
+                <br>
+                <p style="font-size: 14px; color: #666;">Saludos,</p>
+                <p style="font-size: 14px; color: #666;">Angel de Jesus Baños</p>
+            </div>
+        `
+    });
+};
 
-      <p>Sigue el siguiente enlace para generar un password nuevo: 
-      <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3009}/auth/olvide-password/${token}" >Restablecer password</a> </p>
-
-      <p>Si tu no solicitaste el cambio de password, puedes ignorar este email</p>
-  `
-  })
-
-}
-
-export { emailRegistro, emailOlvidePassword }
+export {
+	emailRegistro,
+	emailOlvidePassword
+};

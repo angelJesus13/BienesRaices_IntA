@@ -7,46 +7,45 @@ import appRoutes from './routes/appRoutes.js'
 import apiRoutes from './routes/apiRoutes.js'
 import db from './config/db.js'
 
-//crear la app
+//? Crear la app
 const app = express()
 
-//habilitar lectura de datos de formularios
+//? Habilitar lectura de datos de formularios
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extend: true }))
 
-//Habilitar cookie Parser
+//? Habilitar cookie Parser
 app.use(cookieParser())
 
-//habilitar csurf
+//? Habilitar csurf
 app.use(csurf({ cookie: true }))
 
-//conexion a la bd
+//? Conexion a la bd
 try {
     await db.authenticate();
-    await db.sync({ alter: true }); // Actualiza la tabla con los cambios del modelo
-    console.log('Conexión a la base de datos exitosa y sincronización completada.');
+    db.sync()
+    console.log('Conexión exitosa a la bd')
 } catch (error) {
-    console.error('Error al conectar a la base de datos:', error);
+    console.log(error)
 }
 
-
-
-//habilitar pug
+//? Habilitar pug
 app.set('view engine', 'pug')
 app.set('views', './views')
 
-//Carpeta publica
+//? Carpeta publica
 app.use(express.static('public'))
+app.use(express.static('assets'))
 
 
-//roting
+//? Routing
 app.use('/', appRoutes)
 app.use('/auth', usuarioRoutes)
 app.use('/', propiedadesRoutes)
 app.use('/api', apiRoutes)
 
-//definir un puerto y arrancar el proyecto
-const port = 3009;
+//? Definir un puerto y arrancar el proyecto
+const port = 3001;
 app.listen(port, () => {
-    console.log(`El servidor esta funcionando en el puerto ${port}`)
+    console.log(`El servidor se esta ejecutando en el puerto ${port}`)
 });

@@ -1,28 +1,43 @@
 import express from "express";
-import { formularioLogin, formularioRegistro, registrar, confirmar, formularioOlvidePassword, resetPassword, comprobarToken, nuevoPassword, autenticar, cerrarSesion } from "../controllers/usuarioController.js";
+import { formularioLogin, formularioRegistro, registrar, confirmar, formularioOlvidePassword, resetPassword, comprobarToken, nuevoPassword, autenticar, cerrarSesion, agregarFotoPerfil, verPerfil } from "../controllers/usuarioController.js";
+import upload from '../middleware/subirFotoPerfil.js'
+import Usuario from '../models/Usuario.js'
 
 const router = express.Router();
-
-// Página de inicio de sesión
+//Routing
 router.get('/login', formularioLogin);
 router.post('/login', autenticar);
 
-// Cerrar sesión
-router.post('/cerrar-sesion', cerrarSesion);
+//cerrar sesión 
+router.post('/cerrar-sesion', cerrarSesion)
 
-// Registro de usuarios
 router.get('/registro', formularioRegistro);
 router.post('/registro', registrar);
+router.post('/agregar-imagen', upload.single('fotoperfil'), agregarFotoPerfil);
+router.get('/confirm/:token', confirmar)
 
-// Confirmar cuenta de usuario
-router.get('/confirmar/:token', confirmar);
-
-// Recuperación de contraseña
 router.get('/olvide-password', formularioOlvidePassword);
 router.post('/olvide-password', resetPassword);
 
-// Restablecer contraseña con token
+//Almacena el nuevo password
 router.get('/olvide-password/:token', comprobarToken);
 router.post('/olvide-password/:token', nuevoPassword);
 
-export default router;
+router.get('/mi-perfil', verPerfil)
+
+router.get('/mensaje', async (req, res) => {
+    const { usuarioId } = req.query;
+    try {
+        const usuario = await Usuario.findByPk(usuarioId);
+        res.render('templates/message', {
+            page: 'Cuenta creada correctamente',
+            confirmacion: true,
+            msg: usuario.email
+        });
+    } catch (error) {
+        console.log(error)
+    }
+});
+
+
+export default router

@@ -1,56 +1,90 @@
-module.exports = {
-  content: [
-    './views/auth/**/*.pug',
-    './views/layout/**/*.pug',
-    './src/**/*.{js,jsx,ts,tsx}',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        angelPaleta: {
-          'custom-green': '#91CB3E',
-          'custom-green-hover': '#53A548',
-          'custom-black-hover': '#000000',
-          'custom-sea-green': '#4C934C',
-          white: '#FFFFFF',
-          black: '#000000',
-          'light-gray': '#f7f7f7',
-          'dark-gray': '#333333',
-        },
-      },
-      backgroundImage: {
-        'real-estate': 'linear-gradient(to right, #1e3c72, #2a5298)', // Azul sofisticado
-        'warm-sunset': 'linear-gradient(to bottom, #ff7e5f, #feb47b)', // Atardecer cálido
-        'green-growth': 'linear-gradient(to right, #56ab2f, #a8e063)', // Verde
-        'green-gradient': 'linear-gradient(45deg, #91CB3E, #53A548, #28a745)', // Gradiente verde para animación
-      },
-      animation: {
-        'fade-in': 'fadeIn 1s ease-in-out forwards',
-        'fade-out': 'fadeOut 15s ease-in-out forwards',
-        'gradient-move': 'moverGradiente 5s ease infinite', // Animación para mover gradiente
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        },
-        fadeOut: {
-          '0%': { opacity: 1 },
-          '100%': { opacity: 0, display: 'none' }, // Continuamos con display: none
-        },
-        moverGradiente: {
-          '0%': {
-            backgroundPosition: '0% 50%',
-          },
-          '50%': {
-            backgroundPosition: '100% 50%',
-          },
-          '100%': {
-            backgroundPosition: '0% 50%',
-          },
-        },
-      },
-    },
-  },
-  plugins: [],
-}
+/** @type {import('tailwindcss').Config} */
+export default {
+	content: ['./views/**/*.pug'],
+	theme: {
+	  extend: {
+		maxHeight: {
+		  'space': '690px',
+		},
+		colors: {
+		  redNCS: {
+			light: '#ff455e',
+			DEFAULT: '#ff1b3a',
+		  },
+		  lightRedNCS: {
+			DEFAULT: '#fff2f4',
+		  },
+		  roseTaupe: {
+			DEFAULT: '#e58b8b',
+		  },
+		  taupeGray: {
+			DEFAULT: '#c3b3b3',
+		  },
+		  white: {
+			DEFAULT: '#fff',
+			dark: '#f7f7f7',
+		  },
+		  // Incorporando los colores de angelPaleta
+		  customGreen: '#91CB3E', // custom-green
+		  customGreenHover: '#53A548', // custom-green-hover
+		  customBlackHover: '#000000', // custom-black-hover
+		  customSeaGreen: '#4C934C', // custom-sea-green
+		  lightGray: '#f7f7f7', // light-gray
+		  darkGray: '#333333', // dark-gray
+		},
+		keyframes: {
+		  fadeUp: {
+			'0%': {
+			  display: 'block',
+			  opacity: '0',
+			  transform: 'translateY(-20px)',
+			},
+			'10%': {
+			  opacity: '1',
+			  transform: 'translateY(0)',
+			},
+			'90%': {
+			  opacity: '1',
+			  transform: 'translateY(0)',
+			},
+			'100%': {
+			  opacity: '0',
+			  transform: 'translateY(20px)',
+			  display: 'none',
+			},
+		  },
+		  displayNone: {
+			'0%': {
+			  display: 'block',
+			  marginTop: '-120px',
+			},
+			'100%': {
+			  display: 'none',
+			  marginTop: '-120px',
+			},
+		  },
+		  fadeUpWithoutDown: {
+			'0%': {
+			  display: 'block',
+			  opacity: '0',
+			  transform: 'translateY(-20px)',
+			},
+			'10%': {
+			  opacity: '1',
+			  transform: 'translateY(0)',
+			},
+			'100%': {
+			  opacity: '1',
+			  transform: 'translateY(0)',
+			},
+		  },
+		},
+		animation: {
+		  anim1: 'fadeUp 7s ease-in-out',
+		  anim2: 'displayNone 7s',
+		  anim3: 'fadeUpWithoutDown 7s ease-in-out',
+		},
+	  },
+	},
+	plugins: [],
+};
