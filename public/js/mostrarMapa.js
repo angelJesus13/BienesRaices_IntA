@@ -1,18 +1,14 @@
-(function (){
-  const lat = 20.2741536; // Coordenadas de tu casa
-  const lng = -97.9598598; // Coordenadas de tu casa
-  const calle = "Mi Casa"; // Puedes personalizar el texto de la calle
-  const titulo = "Mi Casa"; // Título de la propiedad o lugar
-
-  const mapa = L.map('mapa').setView([lat, lng], 16)
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(mapa);
-
-  // Agregar el pin
-  L.marker([lat, lng])
-      .addTo(mapa)
-      .bindPopup(calle)
-
-})()
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	
+/******/ 	
+/******/ })()
+;
