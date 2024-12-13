@@ -6,6 +6,9 @@ div(class="bg-white shadow rounded-lg")
                                 span(class="text-gray-800 font-bold")= propiedad.habitaciones
         p(class="text-sm text-gray-600") WC:  
                                 span(class="text-gray-800 font-bold")= propiedad.wc
+        p(class="text-sm text-gray-600") Operación:  
+            span(class="text-gray-800 font-bold")= propiedad.tipo === 'venta' ? 'En Venta' : 'En Renta'
+
         p(class="text-sm text-gray-600") Precio:  
                                 span(class="text-gray-800 font-bold")= propiedad.precio.nombre 
-        a(href=`/propiedad/${propiedad.id}` class="bg-indigo-600 w-full text-center block font-bold text-white p-2 uppercase rounded") Ver Propiedad          
+        a(href=`/propiedad/${propiedad.id}` class="bg-dark  hover:bg-accent w-full text-center block font-bold text-white p-2 uppercase rounded transition-all duration-300 transform hover:scale-105") Ver Propiedad          
